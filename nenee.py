@@ -80,7 +80,6 @@ async def on_message(message):
                 prompt_content = user_text
                 if message.author.id == OWNER_ID:
                     prompt_content = f"[CHỊ BÊ JU JU ĐÂY RÙII>.<]\nTin nhắn từ chị Bê: {user_text}"
-                    prompt_content = user_text
                     
                 response = await client_genai.aio.models.generate_content(
                     model="gemini-3.5-flash-lite",
