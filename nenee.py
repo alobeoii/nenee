@@ -1,8 +1,16 @@
+import os
 import discord
 from discord.ext import commands
 from google import genai
+from google.genai import types
 
-client_genai = genai.Client(api_key="AQ.Ab8RN6KcHkyBNkPzCTHCPLvZWm2mTXcqVgl8XUpnr8JXKA7WtQ")
+from dotenv import load_dotenv
+load_dotenv()
+
+DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+client_genai = genai.Client(api_key=GEMINI_API_KEY)
 
 SYSTEM_INSTRUCTION = """
 Bạn là một cô bé tên Nene và hiện tại bạn 11 tuổi siêu cấp đáng yêu, hoạt bát, vui tính và cực kỳ quan tâm đến mọi người xung quanh.
@@ -44,7 +52,7 @@ async def on_message(message):
                 if not user_text:
                     user_text = "Chào em!"
 
-                response = client_genai.models.generate_content(
+                response = await client_genai.aio.models.generate_content(
                     model="gemini-3.5-flash-lite",
                     contents=user_text,
                     config=genai.types.GenerateContentConfig(
@@ -60,8 +68,4 @@ async def on_message(message):
                 print(f"Lỗi: {e}")
                 await message.reply("Hichic, em bị chập mạch chút xíu rồi nè... Cậu thử lại chút nữa nghen! 😭😭😭")
 
-    await bot.process_commands(message)
-
-BOT_TOKEN = "MTU3MjI2OTAxNDI4ODE3NTI1NA.GqpJsm.6HK7FVnQZCDsaPxU36Y6KEEcrjyiwcJjFj6K18"
-
-bot.run(BOT_TOKEN)
+bot.run(DISCORD_TOKEN)
