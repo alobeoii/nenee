@@ -12,6 +12,11 @@ load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
+if not GEMINI_API_KEY:
+    raise ValueError("Lỗi: Chưa tìm thấy GEMINI_API_KEY trong biến môi trường của Render!")
+if not DISCORD_TOKEN:
+    raise ValueError("Lỗi: Chưa tìm thấy DISCORD_TOKEN trong biến môi trường của Render!")
+
 client_genai = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 SYSTEM_INSTRUCTION = """
