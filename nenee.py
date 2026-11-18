@@ -12,6 +12,8 @@ load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
+OWNER_ID = 873501354751057970
+
 client_genai = genai.Client(api_key=GEMINI_API_KEY)
 
 SYSTEM_INSTRUCTION = """
@@ -75,6 +77,10 @@ async def on_message(message):
                 if not user_text:
                     user_text = "Chào em!"
 
+                prompt_content = user_text
+                if message.author.id == OWNER_ID:
+                    prompt_content = f"[QUYỀN: ĐÂY CHÍNH LÀ BÊ]\nTin nhắn từ chị Bê: {user_text}"
+                    
                 response = await client_genai.aio.models.generate_content(
                     model="gemini-3.5-flash-lite",
                     contents=user_text,
@@ -91,5 +97,5 @@ async def on_message(message):
                 import traceback
                 traceback.print_exc()
                 print(f"Lỗi: {e}")
-                await message.reply(f"Hichic, lỗi chi tiết là: `{str(e)}` 😭😭😭")
+                await message.reply(f"Hichic, em bị ngáo rùi...cứu em 😭😭😭")
 bot.run(DISCORD_TOKEN)
