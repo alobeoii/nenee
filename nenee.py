@@ -9,9 +9,8 @@ from google.genai import types
 from dotenv import load_dotenv
 load_dotenv()
 
-GEMINI_API_KEY = "AQ.Ab8RN6KYPY7ZR71smaBiDb4zHbTw0SnJB3uK1DVz06C0EIpEGg"
-client_genai = genai.Client(api_key=GEMINI_API_KEY)
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 client_genai = genai.Client(api_key=GEMINI_API_KEY)
 
