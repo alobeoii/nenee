@@ -72,7 +72,7 @@ async def on_message(message):
                     user_text = "Chào em!"
 
                 response = await client_genai.aio.models.generate_content(
-                    model="gemini-2.0-flash-lite",
+                    model="gemini-3.5-flash-lite",
                     contents=user_text,
                     config=genai.types.GenerateContentConfig(
                         system_instruction=SYSTEM_INSTRUCTION,
