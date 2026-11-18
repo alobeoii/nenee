@@ -12,7 +12,7 @@ load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-client_genai = genai.Client(api_key=GEMINI_API_KEY)
+client_genai = genai.Client(api_key="AQ.Ab8RN6KYPY7ZR71smaBiDb4zHbTw0SnJB3uK1DVz06C0EIpEGg")
 
 SYSTEM_INSTRUCTION = """
 Bạn là một cô bé tên Nene và hiện tại bạn 11 tuổi siêu cấp đáng yêu, hoạt bát, vui tính và cực kỳ quan tâm đến mọi người xung quanh.
