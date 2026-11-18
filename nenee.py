@@ -87,6 +87,5 @@ async def on_message(message):
                 import traceback
                 traceback.print_exc()
                 print(f"Lỗi: {e}")
-                await message.reply("Hichic, em bị chập mạch chút xíu rồi nè... Cậu thử lại chút nữa nghen! 😭😭😭")
-
+                await message.reply(f"Hichic, lỗi chi tiết là: `{str(e)}` 😭😭😭")
 bot.run(DISCORD_TOKEN)
