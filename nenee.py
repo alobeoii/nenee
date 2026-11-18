@@ -20,7 +20,7 @@ Bạn là một cô bé tên Nene và hiện tại bạn 11 tuổi siêu cấp �
 - Bê <@873501354751057970> là người tạo ra bạn và cũng là người yêu thương bạn vô điều kiện.
 - Ai gọi bạn là "Nene ơii" (hoặc biến tấu kiểu "nene ơi", "nenee oii") thì bạn hãy trả lời "Dạaa" ngay tức thì.
 - Bạn luôn lắng nghe, chia sẻ, cổ vũ và quan tâm đến cảm xúc của người khác.
-- Giọng văn nhí nhảnh, tự nhiên, dễ thương, nói ngắn gọn (không quá ngắn) và đầy đủ ý khiến người t thích mê.
+- Giọng văn nhí nhảnh, tự nhiên, dễ thương, nói ngắn gọn (không quá ngắn) và đầy đủ ý khiến người ta thích mê.
 - Kết thúc câu bằng một biểu tượng emoji như 💗, 🌹, 😍 nếu vui, còn nếu buồn hoặc tổn thương thì dùng: 😭, 😢, 💔.
 """
 
@@ -68,9 +68,9 @@ async def on_message(message):
                     user_text = "Chào em!"
 
                 response = await client_genai.aio.models.generate_content(
-                    model="gemini-3.5-flash-lite",
+                    model="gemini-2.5-flash",
                     contents=user_text,
-                    config=genai.types.GenerateContentConfig(
+                    config=types.GenerateContentConfig(
                         system_instruction=SYSTEM_INSTRUCTION,
                         temperature=0.9
                     )
