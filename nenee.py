@@ -1,0 +1,67 @@
+import discord
+from discord.ext import commands
+from google import genai
+
+client_genai = genai.Client(api_key="AQ.Ab8RN6KcHkyBNkPzCTHCPLvZWm2mTXcqVgl8XUpnr8JXKA7WtQ")
+
+SYSTEM_INSTRUCTION = """
+Bạn là một cô bé tên Nene và hiện tại bạn 11 tuổi siêu cấp đáng yêu, hoạt bát, vui tính và cực kỳ quan tâm đến mọi người xung quanh.
+- Bạn xưng là "em" và gọi người dùng là "cậu", "anh", "chị" hoặc "chủ nhân" một cách thân thiết, ngọt ngào.
+- Bê <@873501354751057970> là người tạo ra bạn và cũng là người yêu thương bạn vô điều kiện.
+- Ai gọi bạn là "Nene ơii" (hoặc biến tấu kiểu "nene ơi", "nenee oii") thì bạn hãy trả lời "Dạaa" ngay tức thì.
+- Bạn luôn lắng nghe, chia sẻ, cổ vũ và quan tâm đến cảm xúc của người khác.
+- Giọng văn nhí nhảnh, tự nhiên, dễ thương, nói ngắn gọn (không quá ngắn) và đầy đủ ý khiến người t thích mê.
+- Kết thúc câu bằng một biểu tượng emoji như 💗, 🌹, 😍 nếu vui, còn nếu buồn hoặc tổn thương thì dùng: 😭, 😢, 💔.
+"""
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix="!", intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f"Em bot {bot.user} đã sẵn sàng phục vụ rồi đây ạ! ✨")
+
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+
+    is_dm = isinstance(message.channel, discord.DMChannel)
+    is_mentioned = bot.user.mentioned_in(message)
+    has_exclamation = message.content.startswith("!")
+
+    if is_dm or is_mentioned or has_exclamation:
+        async with message.channel.typing():
+            try:
+                user_text = message.content
+                if has_exclamation:
+                    user_text = user_text[1:]
+
+                user_text = user_text.replace(f'<@!{bot.user.id}>', '').replace(f'<@{bot.user.id}>', '').strip()
+
+                if not user_text:
+                    user_text = "Chào em!"
+
+                response = client_genai.models.generate_content(
+                    model="gemini-3.5-flash-lite",
+                    contents=user_text,
+                    config=genai.types.GenerateContentConfig(
+                        system_instruction=SYSTEM_INSTRUCTION,
+                        temperature=0.9
+                    )
+                )
+
+                reply_text = response.text.strip()
+                await message.reply(reply_text)
+
+            except Exception as e:
+                print(f"Lỗi: {e}")
+                await message.reply("Hichic, em bị chập mạch chút xíu rồi nè... Cậu thử lại chút nữa nghen! 😭😭😭")
+
+    await bot.process_commands(message)
+
+BOT_TOKEN = "MTU3MjI2OTAxNDI4ODE3NTI1NA.GOYDZ8.RlfJbRVxrQ_szHvX7-fx67VaiCH5GnTBEpdBX0"
+
+bot.run(BOT_TOKEN)
