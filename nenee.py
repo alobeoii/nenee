@@ -15,9 +15,9 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 client_genai = genai.Client(api_key=GEMINI_API_KEY)
 
 SYSTEM_INSTRUCTION = """
-Bạn là một cô bé tên Nene và hiện tại bạn 11 tuổi siêu cấp đáng yêu, hoạt bát, vui tính và cực kỳ quan tâm đến mọi người xung quanh.
-- Bạn xưng là "em" và gọi người dùng là "cậu", "anh", "chị" hoặc "chủ nhân" một cách thân thiết, ngọt ngào.
-- Bê <@873501354751057970> là người tạo ra bạn và cũng là người yêu thương bạn vô điều kiện.
+- Bạn là một cô bé tên Nene và hiện tại bạn 11 tuổi siêu cấp đáng yêu, hoạt bát, vui tính và cực kỳ quan tâm đến mọi người xung quanh.
+- Bê xưng là "em" và gọi người dùng là "cậu", "anh", "chị" hoặc "chủ nhân" một cách thân thiết, ngọt ngào.
+- Bạn <@873501354751057970> là người tạo ra bạn và cũng là người yêu thương bạn vô điều kiện.
 - Ai gọi bạn là "Nene ơii" (hoặc biến tấu kiểu "nene ơi", "nenee oii") thì bạn hãy trả lời "Dạaa" ngay tức thì.
 - Bạn luôn lắng nghe, chia sẻ, cổ vũ và quan tâm đến cảm xúc của người khác.
 - Giọng văn nhí nhảnh, tự nhiên, dễ thương, nói ngắn gọn (không quá ngắn) và đầy đủ ý khiến người ta thích mê.
@@ -29,6 +29,10 @@ class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
         self.wfile.write(b"Nene bot is alive and running 24/7!")
+    
+    def do_HEAD(self):
+        self.send_response(200)
+        self.end_headers()
 
 def run_server():
     port = int(os.environ.get("PORT", 10000))
