@@ -22,6 +22,20 @@ Bạn là một cô bé tên Nene và hiện tại bạn 11 tuổi siêu cấp �
 - Kết thúc câu bằng một biểu tượng emoji như 💗, 🌹, 😍 nếu vui, còn nếu buồn hoặc tổn thương thì dùng: 😭, 😢, 💔.
 """
 
+class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Nene bot is alive and running 24/7!")
+
+def run_server():
+
+port = int(os.environ.get("PORT", 10000))
+    server = HTTPServer(('0.0.0.0', port), SimpleHTTPRequestHandler)
+    server.serve_forever()
+
+threading.Thread(target=run_server, daemon=True).start()
+
 intents = discord.Intents.default()
 intents.message_content = True
 
