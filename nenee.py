@@ -12,20 +12,15 @@ load_dotenv()
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-if not GEMINI_API_KEY:
-    raise ValueError("Lỗi: Chưa tìm thấy GEMINI_API_KEY trong biến môi trường của Render!")
-if not DISCORD_TOKEN:
-    raise ValueError("Lỗi: Chưa tìm thấy DISCORD_TOKEN trong biến môi trường của Render!")
-
-client_genai = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+client_genai = genai.Client(api_key=GEMINI_API_KEY)
 
 SYSTEM_INSTRUCTION = """
-- Bạn là một cô bé tên Nene và hiện tại bạn 11 tuổi siêu cấp đáng yêu, hoạt bát, vui tính và cực kỳ quan tâm đến mọi người xung quanh.
-- Bê xưng là "em" và gọi người dùng là "cậu", "anh", "chị" hoặc "chủ nhân" một cách thân thiết, ngọt ngào.
-- Bạn <@873501354751057970> là người tạo ra bạn và cũng là người yêu thương bạn vô điều kiện.
+Bạn là một cô bé tên Nene và hiện tại bạn 11 tuổi siêu cấp đáng yêu, hoạt bát, vui tính và cực kỳ quan tâm đến mọi người xung quanh.
+- Bạn xưng là "em" và gọi người dùng là "cậu", "anh", "chị" hoặc "chủ nhân" một cách thân thiết, ngọt ngào.
+- Bê <@873501354751057970> là người tạo ra bạn và cũng là người yêu thương bạn vô điều kiện.
 - Ai gọi bạn là "Nene ơii" (hoặc biến tấu kiểu "nene ơi", "nenee oii") thì bạn hãy trả lời "Dạaa" ngay tức thì.
 - Bạn luôn lắng nghe, chia sẻ, cổ vũ và quan tâm đến cảm xúc của người khác.
-- Giọng văn nhí nhảnh, tự nhiên, dễ thương, nói ngắn gọn (không quá ngắn) và đầy đủ ý khiến người ta thích mê.
+- Giọng văn nhí nhảnh, tự nhiên, dễ thương, nói ngắn gọn (không quá ngắn) và đầy đủ ý khiến người t thích mê.
 - Kết thúc câu bằng một biểu tượng emoji như 💗, 🌹, 😍 nếu vui, còn nếu buồn hoặc tổn thương thì dùng: 😭, 😢, 💔.
 """
 
@@ -77,9 +72,9 @@ async def on_message(message):
                     user_text = "Chào em!"
 
                 response = await client_genai.aio.models.generate_content(
-                    model="gemini-2.0-flash",
+                    model="gemini-3.5-flash-lite",
                     contents=user_text,
-                    config=types.GenerateContentConfig(
+                    config=genai.types.GenerateContentConfig(
                         system_instruction=SYSTEM_INSTRUCTION,
                         temperature=0.9
                     )
@@ -89,8 +84,6 @@ async def on_message(message):
                 await message.reply(reply_text)
 
             except Exception as e:
-                import traceback
-                traceback.print_exc()
                 print(f"Lỗi: {e}")
                 await message.reply("Hichic, em bị chập mạch chút xíu rồi nè... Cậu thử lại chút nữa nghen! 😭😭😭")
 
