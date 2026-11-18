@@ -67,7 +67,7 @@ async def on_message(message):
                 if not user_text:
                     user_text = "Chào em!"
 
-                response = await client_genai.aio.models.generate_content(
+                response = client_genai.aio.models.generate_content(
                     model="gemini-2.5-flash",
                     contents=user_text,
                     config=genai.types.GenerateContentConfig(
