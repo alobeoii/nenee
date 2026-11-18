@@ -84,6 +84,8 @@ async def on_message(message):
                 await message.reply(reply_text)
 
             except Exception as e:
+                import traceback
+                traceback.print_exc()
                 print(f"Lỗi: {e}")
                 await message.reply("Hichic, em bị chập mạch chút xíu rồi nè... Cậu thử lại chút nữa nghen! 😭😭😭")
 
