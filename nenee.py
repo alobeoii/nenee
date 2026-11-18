@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GEMINI_API_KEY = AQ.Ab8RN6JD7HmFfUEQK39kg8MnBnMpzPyAkjQkKDgJuX4VKyKexA
 
 client_genai = genai.Client(api_key=GEMINI_API_KEY)
 
